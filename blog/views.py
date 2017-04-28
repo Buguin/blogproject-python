@@ -13,7 +13,7 @@ def index(request):
 
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-
+    #post.body = markdown.markdown(post.body, ['codehilite'])
     post.body = markdown.markdown(post.body,
                                   extensions=[
                                       'markdown.extensions.extra',
