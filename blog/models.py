@@ -12,6 +12,7 @@ class Category(models.Model):
     django 要求我们必须继承 models.Model 类，Category 只需要一个简单的分类名 name 就可以了。CharField 指定了 name 的数据类型，CharField 是字符型，max_length 指定其最大长度，超过这个长度的分类名就不能被存入数据库。当然 django 还为我们提供了各种各样的类型，如日期时间类型 DateTimeField、整数类型 IntegerField 等等。django 内置的类型全部类型可查看文档： https://docs.djangoproject.com/en/1.10/ref/models/fields/#field-types
     """
     name = models.CharField(max_length=100)
+
     def __str__(self):
         # python_2_unicode_compatible 装饰器用于兼容 Python2
         return self.name
