@@ -48,6 +48,7 @@ class Post(models.Model):
 
     # 文章摘要，可以没有文章摘要，但默认情况下 CharField 要求我们必须存入数据，否则就会报错。指定 blank=True 后就可以允许空值了。
     excerpt = models.CharField(max_length=200, blank=True)
+
     #分类与标签，分类与标签的模型我们已经定义在上面。我们在这里把文章对应的数据库表和分类与标签对应的表关联起来，但是关联形式稍微有点不同。我们规定一篇文章只能对应一个分类，但是一个分类下可以有很多篇文章，所以我们使用的是 ForeignKey，即一对多的关系。而对于标签来说，一篇文章可以有多个标签，同一个标签下也可能有多篇文章，所以我们使用 ManyToManyField，表明这是多对多的关系。同时我们规定文章可以没有标签，因此为标签 tags 指定了 blank=True。如果你对 ForeignKey、ManyToManyField 不了解，请看教程中的解释，亦可参考官方文档： https://docs.djangoproject.com/en/1.10/topics/db/models/#relationships
     category = models.ForeignKey(Category)
     tags = models.ManyToManyField(Tag, blank=True)
@@ -61,4 +62,9 @@ class Post(models.Model):
 
     # 自定义 get_absolute_url 方法
     def get_absolute_url(self):
-       return reverse('blog:detail', kwargs={'pk': self.pk})
+
+        return reverse('blog:detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['-created_time', 'title']
+
