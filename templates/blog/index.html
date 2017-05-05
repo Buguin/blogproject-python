@@ -1,36 +1,39 @@
 {% extends 'base.html' %}
 {% block main %}
+{% if error_msg %}
+    <p>{{ error_msg }}</p>
+{% endif %}
 {% for post in post_list %}
     <!--显示blog链接-->
     <article class="post post-1">
-    <h1 class="entry-title">
-        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-    </h1>
+        <h1 class="entry-title">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </h1>
     </article>
 
     <!--分类（category）、文章发布时间、文章作者、评论数-->
     <div class="entry-meta">
-    <span class="post-category"><a href="#">Web Design</a></span>
+        <span class="post-category"><a href="#">Web Design</a></span>
 
-    <span class="post-date"><a href="#"><time class="entry-date"
-                                              datetime="2012-11-09T23:15:57+00:00">February 2, 2013</time></a></span>
+        <span class="post-date"><a href="#"><time class="entry-date"
+                                                  datetime="2012-11-09T23:15:57+00:00">February 2, 2013</time></a></span>
 
-    <span class="post-author"><a href="#">Albert Einstein</a></span>
+        <span class="post-author"><a href="#">Albert Einstein</a></span>
 
-    <span class="comments-link"><a href="#">4 Comments</a></span>
+        <span class="comments-link"><a href="#">4 Comments</a></span>
     </div>
 
     <!--摘要-->
     <div class="entry-meta">
-    <span class="post-category">
-      <a href="#">{{ post.category.name }} </a>
-    </span>
+        <span class="post-category">
+          <a href="#">{{ post.category.name }} </a>
+        </span>
 
-    <span class="post-date">
-      <a href="#">
-        <time class="entry-date" datetime="{{ post.created_time }}">{{ post.created_time }}         </time>
-      </a>
-    </span>
+        <span class="post-date">
+          <a href="#">
+            <time class="entry-date" datetime="{{ post.created_time }}">{{ post.created_time }}         </time>
+          </a>
+        </span>
         <span class="post-author"><a href="#">{{ post.author }} </a></span>
         <span class="comments-link"><a href="#">4 Comments</a></span>
     </div>
@@ -42,7 +45,7 @@
             <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读<span class="meta-nav">→</span></a>
         </div>
     </div>
-{% empty %}<!--bolg为空时显示未发布文章-->
-    <div class="no-post">暂时还没有发布的文章！</div>
-{% endfor %}
+    {% empty %}<!--bolg为空时显示未发布文章-->
+        <div class="no-post">暂时还没有发布的文章！</div>
+    {% endfor %}
 {% endblock main %}

@@ -31,6 +31,7 @@
             <div class="col-md-8 col-sm-7 col-xs-4">
                 <nav class="main-nav" role="navigation">
                     <div class="navbar-header">
+                        <!--<input type="text" id="search-input" maxlength="20">-->
                         <button type="button" id="trigger-overlay" class="navbar-toggle">
                             <span class="ion-navicon"></span>
                         </button>
@@ -48,8 +49,9 @@
                 <div id="header-search-box">
                     <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
                     <div id="search-form" class="search-form">
-                        <form role="search" method="get" id="searchform" action="#">
-                            <input type="search" placeholder="Search" required>
+                        <form role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
+                            {% csrf_token %}
+                            <input type="search" name="q" placeholder="Search" required>
                             <button type="submit"><span class="ion-ios-search-strong"></span></button>
                         </form>
                     </div>
@@ -68,6 +70,8 @@
             {% load blog_tags %}
             <aside class="col-md-4">
                 <div class="widget widget-recent-posts">
+                    {% block catalogue %}
+                    {% endblock catalogue %}
                     <h3 class="widget-title">最新文章</h3>
                     {% get_recent_posts as recent_post_list %}
                     <ul>
