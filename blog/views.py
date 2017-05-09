@@ -5,10 +5,19 @@ from .models import Post, Category
 from comments.forms import CommentForm
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
     post_list = Post.objects.all()
+    paginator = Paginator(post_list, 4)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
     return render(request, 'blog/index.html', context={'post_list': post_list})
 
 
